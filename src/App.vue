@@ -19,16 +19,24 @@ export default {
           id: 1,
           name: 'bike',
           url: require('./assets/bike.png'),
+          bg: '#c6eaf2',
+          dots: '#afd5f3',
         },
         {
           id: 2,
-          name: 'headphones',
-          url: require('./assets/headphones.png'),
+          name: 'boat',
+          url: require('./assets/boat.png'),
+          bg: '#ffd9e5',
+          dots: '#ffbdd6',
+
         },
         {
           id: 3,
           name: 'couch',
           url: require('./assets/couch.png'),
+          bg: '#fcf77c',
+          dots: '#fdda15',
+
         },
       ]
     }

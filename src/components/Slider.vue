@@ -1,8 +1,8 @@
 <template>
-  <section class="slider">
+  <section class="slider" :style="{backgroundColor: activeBackground}">
     <app-menu></app-menu>
     <div class="slider__indicatorList">
-      <span v-for="slider in sliders" :key="slider.id" class="slider__indicator"></span>
+      <span v-for="slider in sliders" :key="slider.id" :class="[slider.id === activeID ? classObj.activeIndicator : '',classObj.sliderIndicator]"></span>
       <span class="line" />
       <span class="text">warsaw, poland</span>
     </div>
@@ -17,8 +17,22 @@
     <div class="slider__content">
       <div class="circle">
         <figure class="circle__img">
-          <img src="../assets/bike.png" alt="">
-      </figure>
+          <img :src="currentSlide" alt="">
+        </figure>
+        <div class="dots">
+          <div class="dots__container">
+            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
+          </div>
+          <div class="dots__container">
+            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
+          </div>
+          <div class="dots__container">
+            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
+          </div>
+          <div class="dots__container">
+            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -32,12 +46,49 @@ export default {
   components: {
     'app-menu': Menu,
   },
+
+  data() {
+    return {
+      currentSlide: null,
+      currentIndex: 0,
+      activeBackground: '',
+      dotsBackground: '',
+      activeID: 0,
+      classObj: {
+        sliderIndicator: 'slider__indicator',
+        activeID: 0,
+        activeIndicator: 'slider__indicatorActive'
+      }
+    }
+  },
+
   props: {
     sliders: {
       type: Array,
       required: true,
     }
-  }
+  },
+
+  methods: {
+    changeSlide() {
+      let maxIndex = this.sliders.length -1;
+      let index = this.currentIndex < maxIndex ? this.currentIndex += 1 : this.currentIndex = 0;
+      this.currentSlide = this.sliders[index].url;
+      this.activeBackground = this.sliders[index].bg;
+      this.dotsBackground = this.sliders[index].dots;
+      this.activeID = this.sliders[index].id;
+    }
+  },
+
+  created() {
+    this.activeBackground = this.sliders[0].bg;
+    this.dotsBackground = this.sliders[0].dots;
+    this.currentSlide = this.sliders[0].url;
+    this.activeID = this.sliders[0].id;
+    setInterval(()=>{
+      this.changeSlide();
+    }, 2500)
+  },
 };
 </script>
 
@@ -83,9 +134,9 @@ export default {
       background-color: #fff;
     }
 
-
-
-
+    &__indicatorActive {
+      background-color: #474747;
+    }
 
     &__content {
       grid-column: 1 / span 2;
@@ -104,6 +155,20 @@ export default {
       .circle__img {
         position: absolute;
         bottom: 1%;
+      }
+
+      .dots {
+          position: absolute;
+          right: -3rem;
+
+          &__item {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background-color: #AFD5F3;
+          }
       }
     }
   }
