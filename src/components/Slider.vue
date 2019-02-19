@@ -7,7 +7,7 @@
       <span class="text">warsaw, poland</span>
     </div>
     <div class="claim">
-      <h1>buy.sell.trade</h1>
+      <h1>buy.sell.trade.</h1>
       <div class="claim__content">
         <h3>Community driven</h3>
         <p>We are classified advertisements website with sections devoted to jobs, housing, personals, for sale, items wanted, services, community, gigs, resumes, and discussion forums.</p>
@@ -51,12 +51,11 @@ export default {
     return {
       currentSlide: null,
       currentIndex: 0,
+      activeID: 0,
       activeBackground: '',
       dotsBackground: '',
-      activeID: 0,
       classObj: {
         sliderIndicator: 'slider__indicator',
-        activeID: 0,
         activeIndicator: 'slider__indicatorActive'
       }
     }
@@ -104,6 +103,18 @@ export default {
     color: #474747;
     background-color: #c6eaf2;
 
+    @media(min-width: 768px) {
+      height: 60vh;
+    }
+
+    @media(min-width: 1024px) {
+      grid-template-columns: 9% 40% auto;
+      grid-template-rows: 10% auto;
+      grid-gap: unset;
+      grid-row-gap: 10%;
+
+    }
+
     &__indicatorList {
       display: flex;
       flex-direction: column;
@@ -139,10 +150,15 @@ export default {
     }
 
     &__content {
+      position: relative;
       grid-column: 1 / span 2;
       display: flex;
       flex-direction: column;
       align-items: center;
+
+       @media(min-width: 1024px) {
+         grid-column: unset;
+       }
 
       & > .circle {
         position: relative;
@@ -150,6 +166,18 @@ export default {
         height: 25rem;
         border-radius: 50%;
         background-color: #fff;
+
+         @media(min-width: 768px) {
+          width: 28rem;
+          height: 28rem;
+        }
+
+        @media(min-width: 1024px) {
+          position: absolute;
+          top: -1.1rem;
+          width: 42rem;
+          height: 42rem;
+        }
       }
 
       .circle__img {
@@ -161,6 +189,20 @@ export default {
           position: absolute;
           right: -3rem;
 
+          @media(min-width: 1024px) {
+              right: -5rem;
+              top: 4rem;
+          }
+
+          &__container {
+            margin-bottom: 2px;
+
+            @media(min-width: 768px) {
+              margin-bottom: 5px;
+            }
+
+          }
+
           &__item {
             display: inline-block;
             width: 6px;
@@ -168,6 +210,19 @@ export default {
             border-radius: 50%;
             margin-right: 8px;
             background-color: #AFD5F3;
+
+            @media(min-width: 768px) {
+              width: 8px;
+              height: 8px;
+              margin-right: 12px;
+            }
+
+            @media(min-width: 1024px) {
+              width: 1rem;
+              height: 1rem;
+              margin-right: 1.4rem;
+              margin-bottom: 4px;
+            }
           }
       }
     }
@@ -180,19 +235,49 @@ export default {
     & > h1 {
       font-size: 3.2rem;
       margin-bottom: 2rem;
+
+      @media(min-width: 768px) {
+        font-size: 5rem;
+      }
+
+      @media(min-width: 1024px) {
+        font-size: 8rem;
+        letter-spacing: .7rem;
+        z-index: 1;
+      }
     }
 
     & > &__content {
       width: 90%;
       margin-bottom: 2rem;
 
+       @media(min-width: 768px) {
+          width: 55%;
+        }
+
+        @media(min-width: 1024px) {
+          width: 100%;
+        }
+
       & > h3 {
         font-size: 1.8rem;
         margin-bottom: .6rem;
+
+        @media(min-width: 768px) {
+          font-size: 2.3rem;
+        }
+
+        @media(min-width: 1024px) {
+          letter-spacing: 2px;
+        }
       }
 
       & > p {
         font-size: 1.4rem;
+
+        @media(min-width: 1024px) {
+          line-height: 1.5;
+        }
       }
     }
 
@@ -205,6 +290,16 @@ export default {
 
   img {
     width: 250px;
-    height: 140px;;
+    height: 150px;
+
+    @media(min-width: 768px) {
+      width: 250px;
+      height: 150px;
+    }
+
+    @media(min-width: 1024px) {
+      width: 450px;
+      height: 250px;
+    }
   }
 </style>

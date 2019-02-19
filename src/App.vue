@@ -78,7 +78,6 @@ html {
   &:visited {
       border-radius: 4px;
       text-align: center;
-      font-size: 1.2rem;
       color: inherit;
       text-decoration: none;
   }
@@ -86,10 +85,29 @@ html {
   &:hover {
     cursor: pointer;
   }
-}
 
-.button--primary {
-  padding: .5rem 2.5rem;
-  background-color: #fff;
+  &--primary {
+    padding: .6rem 2.5rem;
+    font-size: 1.3rem;
+    background-color: #fff;
+
+    @media(min-width: 768px) {
+      font-size: 1.6rem;
+    }
+
+    @media(min-width: 1024px) {
+      padding: 1rem 4rem;
+    }
+  }
+
+  &--reg {
+    padding: .6rem 1.5rem;
+    font-size: 1.2rem;
+    background-color: #fff;
+
+     @media(min-width: 768px) {
+      font-size: 1.4rem;
+    }
+  }
 }
 </style>

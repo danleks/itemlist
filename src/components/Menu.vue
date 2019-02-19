@@ -1,8 +1,8 @@
 <template>
     <nav class="nav">
         <span>itemslist</span>
-        <a class="button button--primary" href="#">login</a>
-        <a class="button button--primary" href="#">sign in</a>
+        <a class="button button--reg" href="#">login</a>
+        <a class="button button--reg" href="#">sign in</a>
     </nav>
 </template>
 
@@ -17,6 +17,10 @@ export default {
         grid-column: 1 / span 2;
         display: flex;
         align-items: center;
+
+        @media(min-width: 1024px) {
+            grid-column: 1 / span 3;
+        }
 
         & > span {
             flex: 2;
