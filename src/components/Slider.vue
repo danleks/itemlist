@@ -1,152 +1,102 @@
 <template>
-  <section class="slider" :style="{backgroundColor: activeBackground}">
-    <app-menu></app-menu>
-    <div class="slider__indicatorList">
-      <span v-for="slider in sliders" :key="slider.id" :class="[slider.id === activeID ? classObj.activeIndicator : '',classObj.sliderIndicator]"></span>
-      <span class="line" />
-      <span class="text">warsaw, poland</span>
-    </div>
-    <div class="claim">
-      <h1>buy.sell.trade.</h1>
-      <div class="claim__content">
-        <h3>Community driven</h3>
-        <p>We are classified advertisements website with sections devoted to jobs, housing, personals, for sale, items wanted, services, community, gigs, resumes, and discussion forums.</p>
-      </div>
-      <a class="button button--primary" href="#">learn more</a>
-    </div>
-    <div class="slider__content">
-      <div class="circle">
-        <figure class="circle__img">
-          <img :src="currentSlide" alt="">
-        </figure>
-        <div class="dots">
-          <div class="dots__container">
-            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
-          </div>
-          <div class="dots__container">
-            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
-          </div>
-          <div class="dots__container">
-            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
-          </div>
-          <div class="dots__container">
-            <span :style="{backgroundColor: dotsBackground}" v-for="dot in 8" :key="dot" class="dots__item" />
-          </div>
-        </div>
-      </div>
+  <section class="slider">
+    <div class="slider__innerContent">
+      <app-menu></app-menu>
+      <slider-indicator :currentSlide="currentSlide"></slider-indicator>
+      <slider-claim></slider-claim>
+      <app-slides></app-slides>
     </div>
   </section>
 </template>
 
 <script>
 import Menu from './Menu.vue';
+import Indicator from './Indicator.vue';
+import Claim from './Claim.vue';
+import Slides from './Slides.vue';
 
 export default {
   name: 'Slider',
   components: {
     'app-menu': Menu,
+    'slider-indicator': Indicator,
+    'slider-claim': Claim,
+    'app-slides': Slides,
+
   },
 
   data() {
     return {
-      currentSlide: null,
-      currentIndex: 0,
-      activeID: 0,
-      activeBackground: '',
-      dotsBackground: '',
-      classObj: {
-        sliderIndicator: 'slider__indicator',
-        activeIndicator: 'slider__indicatorActive'
-      }
+      currentSlide: {
+        url: null,
+        index: 0,
+        id: 0,
+        activeBackground: '',
+        dotsBackground: '',
+      },
     }
   },
 
   props: {
-    sliders: {
+    slides: {
       type: Array,
       required: true,
     }
   },
 
   methods: {
-    changeSlide() {
-      let maxIndex = this.sliders.length -1;
-      let index = this.currentIndex < maxIndex ? this.currentIndex += 1 : this.currentIndex = 0;
-      this.currentSlide = this.sliders[index].url;
-      this.activeBackground = this.sliders[index].bg;
-      this.dotsBackground = this.sliders[index].dots;
-      this.activeID = this.sliders[index].id;
-    }
+    defaultSlide() {
+      this.currentSlide.id = this.slides[0].id;
+      this.currentSlide.url = this.slides[0].url;
+      this.currentSlide.activeBackground = this.slides[0].bg;
+      this.currentSlide.dotsBackground = this.slides[0].dots;
+    },
+
+    nextSlide() {
+      let maxIndex = this.slides.length -1;
+      let index = this.currentSlide.index < maxIndex ? this.currentSlide.index += 1 : this.currentSlide.index = 0;
+      this.currentSlide.id = this.slides[index].id;
+      this.currentSlide.url = this.slides[index].url;
+      this.currentSlide.activeBackground = this.slides[index].bg;
+      this.currentSlide.dotsBackground = this.slides[index].dots;     
+    },
   },
 
   created() {
-    this.activeBackground = this.sliders[0].bg;
-    this.dotsBackground = this.sliders[0].dots;
-    this.currentSlide = this.sliders[0].url;
-    this.activeID = this.sliders[0].id;
-    setInterval(()=>{
-      this.changeSlide();
+    this.defaultSlide();   
+    setInterval( () => {
+      this.nextSlide();
     }, 2500)
   },
-};
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .slider {
-    display: grid;
-    grid-template-columns: 9% auto;
-    grid-template-rows: 10% 20rem auto;
-    grid-gap: 5%;
-    height: 100vh;
-    width: 100%;
-    color: #474747;
     background-color: #c6eaf2;
 
-    @media(min-width: 768px) {
-      height: 60vh;
-    }
+    &__innerContent {
+      display: grid;
+      grid-template-columns: 9% auto;
+      grid-template-rows: 8% 20rem auto;
+      grid-gap: 5%;
+      height: 100vh;
+      max-width: 120rem;
+      margin: auto;
+      color: #474747;      
 
-    @media(min-width: 1024px) {
-      grid-template-columns: 9% 40% auto;
-      grid-template-rows: 10% auto;
-      grid-gap: unset;
-      grid-row-gap: 10%;
-
-    }
-
-    &__indicatorList {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .line {
-        width: 4rem;
-        height: 1px;
-        margin-top: 3rem;
-        transform: rotate(90deg);
-        background-color: #474747;
+      @media(min-width: 768px) {
+        grid-template-columns: 9% 40% auto;
+        height: 60vh;
       }
 
-      .text {
-        width: 7rem;
-        margin-top: 6rem;
-        transform: rotate(-90deg);
-
+      @media(min-width: 1024px) {
+        grid-template-rows: 10% auto;
+        grid-gap: unset;
+        grid-row-gap: 10%;
       }
-    }
-
-    &__indicator {
-      display: block;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      margin-bottom: .7rem;
-      background-color: #fff;
-    }
-
-    &__indicatorActive {
-      background-color: #474747;
     }
 
     &__content {

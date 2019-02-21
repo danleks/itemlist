@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="mainWrapper">
-      <app-slider :sliders="sliders"></app-slider>
+      <app-slider :slides="slides"></app-slider>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   name: 'app',
   data() {
     return {
-      sliders: [
+      slides: [
         {
           id: 1,
           name: 'bike',
@@ -45,6 +45,10 @@ export default {
   components: {
     'app-slider': Slider,
   },
+
+  mounted() {
+    this.$root.$emit('app-slides', this.slides);
+  }
 };
 </script>
 
