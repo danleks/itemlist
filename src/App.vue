@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Slider from './components/Slider.vue';
+import Slider from './components/slider/Slider.vue';
 
 
 export default {
@@ -54,6 +54,7 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Rambla');
+
 html {
   box-sizing: border-box;
   font-size: 62.5%;
@@ -91,6 +92,7 @@ html {
   }
 
   &--primary {
+    width: 15rem;
     padding: .6rem 2.5rem;
     font-size: 1.3rem;
     background-color: #fff;

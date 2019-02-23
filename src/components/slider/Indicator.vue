@@ -28,7 +28,7 @@ export default {
   mounted() {
     this.$root.$on('app-slides', slides => {
       this.slidesFORindicators = slides;
-    })    
+    })
   }
 
 }
