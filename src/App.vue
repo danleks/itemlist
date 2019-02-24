@@ -2,12 +2,14 @@
   <div id="app">
     <div class="mainWrapper">
       <app-slider :slides="slides"></app-slider>
+      <app-list></app-list>
     </div>
   </div>
 </template>
 
 <script>
 import Slider from './components/slider/Slider.vue';
+import List from './components/items/List.vue';
 
 
 export default {
@@ -38,16 +40,84 @@ export default {
           dots: '#fdda15',
 
         },
+      ],
+
+      items: [
+        {
+          id: 11,
+          category: 'couch',
+          price: 300,
+          date: 'Dec 20',
+          description: 'hardly used sectional',
+          condition: 3,
+          url: require('./assets/couches/couch-1.jpg'),
+        },
+        {
+          id: 12,
+          category: 'couch',
+          price: 150,
+          date: 'Jan 02',
+          description: 'sectional great condition',
+          condition: 4,
+          url: require('./assets/couches/couch-2.jpg'),
+        },
+        {
+          id: 13,
+          category: 'couch',
+          price: 275,
+          date: 'Sept 15',
+          description: 'leather sectional like new',
+          condition: 3,
+          url: require('./assets/couches/couch-3.jpg'),
+        },
+        {
+          id: 14,
+          category: 'couch',
+          price: 360,
+          date: 'May 11',
+          description: 'pier one couch',
+          condition: 2,
+          url: require('./assets/couches/couch-4.jpg'),
+        },
+        {
+          id: 15,
+          category: 'couch',
+          price: 455,
+          date: 'Jun 03',
+          description: 'mint condition couch',
+          condition: 3,
+          url: require('./assets/couches/couch-5.jpeg'),
+        },
+        {
+          id: 16,
+          category: 'couch',
+          price: 580,
+          date: 'July 14',
+          description: 'urban outfitters couch',
+          condition: 3,
+          url: require('./assets/couches/couch-6.jpg'),
+        },
+        {
+          id: 17,
+          category: 'couch',
+          price: 133,
+          date: 'April 22',
+          description: 'rooms to go sectional',
+          condition: 3,
+          url: require('./assets/couches/couch-7.jpeg'),
+        },
       ]
     }
   },
 
   components: {
     'app-slider': Slider,
+    'app-list': List,
   },
 
   mounted() {
     this.$root.$emit('app-slides', this.slides);
+    this.$root.$emit('app-items', this.items);
   }
 };
 </script>

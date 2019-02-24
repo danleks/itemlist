@@ -111,8 +111,7 @@ export default {
         grid-row-gap: 18rem;
         grid-template-columns: 6rem 55% auto;
         height: 100vh;
-      }
-    }
+      }    }
 
   }
 </style>

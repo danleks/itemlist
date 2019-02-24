@@ -67,6 +67,7 @@ export default {
       &__img {
         position: absolute;
         bottom: 1px;
+        height: 70%;
 
         &> img {
           max-width: 100%;
