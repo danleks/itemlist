@@ -59,15 +59,16 @@ export default {
       this.currentSlide.url = this.slides[index].url;
       this.currentSlide.activeBackground = this.slides[index].bg;
       this.currentSlide.dotsBackground = this.slides[index].dots;
+      this.$root.$emit('current-slide', this.currentSlide);
     },
   },
 
   created() {
     this.defaultSlide();
+    this.$root.$emit('current-slide', this.currentSlide);
     setInterval( () => {
       this.nextSlide();
     }, 2500)
-    this.$root.$emit('current-slide', this.currentSlide);
   },
 }
 
@@ -85,22 +86,31 @@ export default {
     &__innerContent {
       display: grid;
       grid-template-columns: 9% auto;
-      grid-template-rows: 8% 20rem calc(100% - 18% - 20rem);
-      grid-gap: 5%;
+      grid-template-rows: 8vh 30vh calc(100vh - 18vh - 30vh);
+      grid-gap: 5vh;
       height: 100vh;
       max-width: 120rem;
       margin: auto;
       color: #474747;
 
       @media(min-width: 768px) {
-        grid-template-columns: 9% 40% auto;
-        height: 60vh;
+        grid-template-columns: 6rem 40vw auto;
+        grid-template-rows: 8vh 30vh;
+        grid-gap: 1rem;
+        grid-row-gap: 6rem;
+        height: 54vh;
       }
 
       @media(min-width: 1024px) {
-        grid-template-rows: 10% auto;
-        grid-gap: unset;
-        grid-row-gap: 10%;
+        grid-template-columns: 6rem 48% auto;
+        grid-row-gap: 8rem;
+        height: 70vh;
+      }
+
+      @media(min-width: 1200px) {
+        grid-row-gap: 18rem;
+        grid-template-columns: 6rem 55% auto;
+        height: 100vh;
       }
     }
 

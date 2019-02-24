@@ -100,10 +100,6 @@ html {
     @media(min-width: 768px) {
       font-size: 1.6rem;
     }
-
-    @media(min-width: 1024px) {
-      padding: 1rem 4rem;
-    }
   }
 
   &--reg {
