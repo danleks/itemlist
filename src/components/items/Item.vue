@@ -1,6 +1,7 @@
 <template>
     <div class="itemWrapper">
-        <div v-for="item in itemList" :key="item.id" class="item">
+        <app-spinner v-if="load"></app-spinner>
+        <div v-else v-for="item in itemsLoaded" :key="item.id" class="item">
             <figure class="item__img">
                 <img :src="item.url" :alt="item.description">
             </figure>
@@ -22,51 +23,60 @@
 </template>
 
 <script>
+import Spinner from './Spinner.vue';
+
 export default {
     data() {
         return {
             itemList: [],
+            itemsLoaded: [],
+            step: 0,
+            load: true,
         }
+    },
+
+    components: {
+        'app-spinner': Spinner,
     },
 
     methods: {
-        handleScroll(items) {
+        handleScroll() {
             let scrollHeight = window.scrollY;
             let maxHeight = window.document.body.scrollHeight - window.document.documentElement.clientHeight;
-
-            if (scrollHeight >= maxHeight - 200) {
-                this.getPosts(items);
-            }
+            this.addPost(scrollHeight, maxHeight);
         },
 
-        getPosts(items) {
-            for (let i = 0; i < items.length; i++) {
-                this.itemList.push({
-                    id: items[i].id,
-                    category: items[i].category,
-                    price: items[i].price,
-                    date: items[i].date,
-                    description: items[i].description,
-                    condition: items[i].condition,
-                    url: items[i].url,
-                })
+        addPost(scrollHeight, maxHeight) {
+            if (scrollHeight >= maxHeight - 50 && this.step < this.itemList.length) {
+                for(let i = 0; i < 2; i++) {
+                     this.itemsLoaded.push(this.itemList[this.step]);
+                    this.step += 1;
+                }
+
             }
         }
     },
 
-    created() {
+    mounted() {
         this.$root.$on('app-items', items => {
-            this.itemList = items;
-            // this.getPosts(items);
-            //  window.addEventListener('scroll', this.handleScroll(items))
+                this.itemList = items;
         });
-       ;
+
+        setTimeout(()=>{
+            this.load = false;
+        }, 1000)
+
+        this.addPost();
+        window.addEventListener('scroll', this.handleScroll);
     }
 
 }
 </script>
 
 <style lang="scss" scoped>
+    .itemWrapper {
+        margin: auto;
+    }
 
     .item {
         position: relative;
