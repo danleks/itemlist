@@ -1,29 +1,39 @@
 <template>
-    <div class="itemWrapper">
-        <app-spinner v-if="load"></app-spinner>
-        <div v-else v-for="item in itemsLoaded" :key="item.id" class="item">
-            <figure class="item__img">
-                <img :src="item.url" :alt="item.description">
-            </figure>
-            <div class="item__price">
-                <span>$ {{item.price}}</span>
-            </div>
-            <div class="item__panel">
-                <span>{{item.date}}</span>
-                <span>{{item.description}}</span>
-                <span>
-                    <i v-for="star in item.condition" :key="star" class="fas fa-star"></i>
-                </span>
-            </div>
-            <div class="item__more">
-                <span>{{item.more}}</span>
+    <section id="item">
+        <div v-if="!details" class="itemWrapper">
+            <app-spinner v-if="load"></app-spinner>
+            <div v-else v-for="item in itemsLoaded" :key="item.id" class="item">
+                <figure class="item__img">
+                    <img :src="item.url" :alt="item.description">
+                </figure>
+                <div class="item__price">
+                    <span>$ {{item.price}}</span>
+                </div>
+                <div class="item__panel">
+                    <span>{{item.date}}</span>
+                    <span>{{item.description}}</span>
+                    <span>
+                        <i v-for="star in item.condition" :key="star" class="fas fa-star"></i>
+                    </span>
+                </div>
+                <div class="item__more">
+                    <a href="#" @click.prevent="showDetails">Tap to see more</a>
+                </div>
             </div>
         </div>
-    </div>
+        <transition
+            name="slide"
+            enter-active-class="slideIn"
+            leave-active-class="slideOut"
+        >
+            <app-details @closeDetails="closeDetails" v-if="details"></app-details>
+        </transition>
+   </section>
 </template>
 
 <script>
 import Spinner from './Spinner.vue';
+import Details from './Details.vue';
 
 export default {
     data() {
@@ -32,11 +42,13 @@ export default {
             itemsLoaded: [],
             step: 0,
             load: true,
+            details: false,
         }
     },
 
     components: {
         'app-spinner': Spinner,
+        'app-details': Details,
     },
 
     methods: {
@@ -47,13 +59,23 @@ export default {
         },
 
         addPost(scrollHeight, maxHeight) {
-            if (scrollHeight >= maxHeight - 50 && this.step < this.itemList.length) {
+            if (scrollHeight >= maxHeight - 50 && this.step < this.itemList.length - 1) {
                 for(let i = 0; i < 2; i++) {
                      this.itemsLoaded.push(this.itemList[this.step]);
                     this.step += 1;
                 }
-
             }
+        },
+
+        showDetails() {
+            this.details = true;
+            this.$root.$emit('showDetails', this.details);
+        },
+
+        closeDetails(e) {
+            this.details = e;
+            this.$root.$emit('closeDetails', this.details);
+
         }
     },
 
@@ -136,6 +158,49 @@ export default {
                 color: #fff;
             }
         }
+
+        &__more {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: inline-block;
+            padding: 1rem;
+            font-size: 1.4rem;
+            color: #fff;
+            background-color: rgba(0,0,0,.4);
+
+            & > a {
+                &,
+                &:link,
+                &:visited {
+                    color: inherit;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+
+
+    //ANIMATIONS
+
+    @keyframes slideIn {
+        0% {transform: translateY(100rem);}
+        100% {transform: translateY(0);}
+    }
+
+    @keyframes slideOut {
+        0% {transform: translateY(0rem);}
+        100% {transform: translateY(100rem);}
+    }
+
+    .slideIn {
+        animation: slideIn .2s ease;
+    }
+
+    .slideOut {
+        animation: slideOut .2s ease;
     }
 
 </style>

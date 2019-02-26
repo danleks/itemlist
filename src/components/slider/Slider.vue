@@ -27,6 +27,7 @@ export default {
 
   data() {
     return {
+      details: false,
       currentSlide: {
         url: '',
         index: 0,
@@ -68,7 +69,14 @@ export default {
     this.$root.$emit('current-slide', this.currentSlide);
     setInterval( () => {
       this.nextSlide();
-    }, 2500)
+    }, 2500);
+
+    this.$root.$on('showDetails', details => {
+      this.details = details;
+    });
+    this.$root.$on('closeDetails', details => {
+            this.details = details;
+    });
   },
 }
 

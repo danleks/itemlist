@@ -16,6 +16,7 @@ export default {
   name: 'app',
   data() {
     return {
+      details: false,
       slides: [
         {
           id: 1,
@@ -118,7 +119,7 @@ export default {
   mounted() {
     this.$root.$emit('app-slides', this.slides);
     this.$root.$emit('app-items', this.items);
-  }
+  },
 };
 </script>
 

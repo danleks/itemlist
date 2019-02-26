@@ -13,6 +13,7 @@ export default {
     data() {
         return {
             load: false,
+            details: false,
         }
     },
 
@@ -25,6 +26,13 @@ export default {
         setTimeout(()=>{
             this.load = true;
         }, 1000)
+
+        this.$root.$on('showDetails', details => {
+            this.details = details;
+        });
+        this.$root.$on('closeDetails', details => {
+            this.details = details;
+        });
     }
 }
 </script>
